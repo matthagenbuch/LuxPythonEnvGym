@@ -12,7 +12,7 @@ DIRECTIONS = Constants.DIRECTIONS
 RESOURCE_TYPES = Constants.RESOURCE_TYPES
 
 """ Enum implemenations """
-mapSizes = [12, 16, 24, 32]
+mapSizes = [8, 12, 14, 16]
 
 
 class SYMMETRY:

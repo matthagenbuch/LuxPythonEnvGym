@@ -45,6 +45,7 @@ class City:
         """
         bonus = 0
         for cell in self.city_cells:
+            if not cell.city_tile: continue
             bonus += cell.city_tile.adjacent_city_tiles * self.configs["parameters"]["CITY_ADJACENCY_BONUS"]
 
         return bonus
