@@ -55,6 +55,8 @@ class City:
 
         :param cell:
         """
+        if not cell.city_tile:
+            cell.set_city_tile(self.team, self.id)
         self.city_cells.append(cell)
 
 
