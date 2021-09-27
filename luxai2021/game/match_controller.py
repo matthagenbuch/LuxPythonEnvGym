@@ -282,7 +282,7 @@ class MatchController:
                         if city.team == agent.team:
                             for cell in city.city_cells:
                                 city_tile = cell.city_tile
-                                if city_tile.can_act():
+                                if city_tile and city_tile.can_act():
                                     # RL training agent that is controlling the simulation
                                     # The enviornment then handles this city, and calls take_action() to buffer a requested action
                                     yield None, city_tile, city_tile.team, new_turn
