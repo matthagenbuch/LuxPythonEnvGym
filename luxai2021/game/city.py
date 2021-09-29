@@ -127,3 +127,9 @@ class CityTile(Actionable):
 
         """
         self.cooldown = self.configs["parameters"]["CITY_ACTION_COOLDOWN"]
+
+    def research(self):
+        return ResearchAction(self.team, self.pos.x, self.pos.y, None)
+
+    def build_worker(self):
+        return SpawnWorkerAction(self.team, None, self.pos.x, self.pos.y)

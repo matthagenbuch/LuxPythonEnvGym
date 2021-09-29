@@ -108,6 +108,19 @@ class Unit(Actionable):
             return True
         return False
 
+    def move(self, dir) -> str:
+        """
+        return the command to move unit in the given direction
+        """
+        return MoveAction(self.team, self.id, dir)
+
+    def build_city(self) -> str:
+        """
+        return the command to build a city right under the worker
+        """
+        # TODO: Implement this action effect!
+        return SpawnCityAction(self.team, self.id)
+
 
 class Cargo:
     def __init__(self):
