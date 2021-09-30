@@ -5,6 +5,7 @@ import traceback
 import gym
 import os
 from stable_baselines3.common.callbacks import BaseCallback
+from collections import Counter
 
 from ..game.game import Game
 from ..game.match_controller import GameStepFailedException, MatchController
@@ -218,3 +219,9 @@ class LuxEnvironment(gym.Env):
             is_game_error = True
 
         return is_game_error
+
+    def get_stats(self):
+        try:
+            return Counter(self.learning_agent.stats)
+        except:
+            return Counter()
