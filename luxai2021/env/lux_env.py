@@ -6,6 +6,8 @@ import gym
 import os
 from stable_baselines3.common.callbacks import BaseCallback
 from collections import Counter
+import copy
+from functools import reduce
 
 from ..game.game import Game
 from ..game.match_controller import GameStepFailedException, MatchController
@@ -110,6 +112,9 @@ class LuxEnvironment(gym.Env):
         self.match_generator = None
 
         self.last_observation_object = None
+        
+        self.stats = Counter()
+        self.n_games = 0
 
     def set_replay_path(self, replay_folder, replay_prefix):
         """
@@ -120,6 +125,7 @@ class LuxEnvironment(gym.Env):
         """
         self.replay_prefix = replay_prefix
         self.replay_folder = replay_folder
+        
 
     def step(self, action_code):
         """
@@ -158,6 +164,10 @@ class LuxEnvironment(gym.Env):
 
         # Calculate reward for this step
         reward = self.learning_agent.get_reward(self.game, is_game_over, is_new_turn, is_game_error)
+
+        if is_game_over:
+            self.stats += Counter(self.learning_agent.stats)
+            self.n_games += 1
 
         return obs, reward, is_game_over, {}
 
@@ -221,7 +231,10 @@ class LuxEnvironment(gym.Env):
         return is_game_error
 
     def get_stats(self):
-        try:
-            return Counter(self.learning_agent.stats)
-        except:
-            return Counter()
+        ret_stats = copy.deepcopy(self.stats)
+        ret_stats["game/n"] = self.n_games
+        return ret_stats
+    
+    def reset_stats(self):
+        self.stats = Counter()
+        self.n_games = 0
