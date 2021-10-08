@@ -254,7 +254,7 @@ class MatchController:
             
             # Run agent.turn_heurstics() to apply any agent heristics to give units orders
             for agent in self.agents:
-                agent.turn_heurstics(self.game, is_first_turn)
+                self.take_actions(agent.turn_heurstics(self.game, is_first_turn))
 
             # Process this turn
             for agent in self.agents:
