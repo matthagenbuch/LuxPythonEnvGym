@@ -119,11 +119,17 @@ class Game:
         if increment_turn:
             turn = self.state["turn"] + 1
 
+        research_points = 0
+        if self.configs["resourceFocus"] == "coal":
+            research_points = 30
+        elif self.configs["resourceFocus"] == "uranium":
+            research_points = 200
+
         self.state = {
             "turn": turn,
             "teamStates": {
                 Constants.TEAM.A: {
-                    "researchPoints": 0,
+                    "researchPoints": research_points,
                     "units": {},
                     "researched": {
                         "wood": True,
@@ -132,7 +138,7 @@ class Game:
                     }
                 },
                 Constants.TEAM.B: {
-                    "researchPoints": 0,
+                    "researchPoints": research_points,
                     "units": {},
                     "researched": {
                         "wood": True,

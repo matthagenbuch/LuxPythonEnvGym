@@ -93,4 +93,5 @@ LuxMatchConfigs_Default = {
     "debugAnnotations": False,
     "statefulReplay": False,
     "parameters": GAME_CONSTANTS["PARAMETERS"],
+    "resourceFocus": "normal"
 }

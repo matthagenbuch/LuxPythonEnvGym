@@ -31,6 +31,24 @@ MOVE_DELTAS = [
     [1, 1],
 ]
 
+RESOURCE_DENSITY_MAP = {
+    "normal": {
+        "wood": (0.21, 0.01),
+        "coal": (0.11, 0.02),
+        "uranium": (0.055, 0.04),
+    },
+    "coal": {
+        "wood": (0.025, 0.005),
+        "coal": (0.21, 0.01),
+        "uranium": (0.11, 0.02),
+    },
+    "uranium": {
+        "wood": (0.025, 0.005),
+        "coal": (0.025, 0.005),
+        "uranium": (0.21, 0.01),
+    }
+}
+
 
 def sign(value):
     if value > 0:
@@ -231,10 +249,14 @@ class GameMap:
             for j in range(width):
                 resources_map[i].append(None)
 
+        resource_focus = self.configs["resourceFocus"]
+        density_map = RESOURCE_DENSITY_MAP[resource_focus]
+
+        wood_density = density_map["wood"]
         wood_resources_map = self._generate_resource_map(
             rng,
-            0.21,
-            0.01,
+            wood_density[0],
+            wood_density[1],
             half_width,
             half_height,
             {"deathLimit": 2, "birthLimit": 4}
@@ -246,10 +268,11 @@ class GameMap:
                     amt = min(300 + math.floor(rng.random() * 100), 500)
                     resources_map[y][x] = {"type": Constants.RESOURCE_TYPES.WOOD, "amt": amt}
 
+        coal_density = density_map["coal"]
         coal_resources_map = self._generate_resource_map(
             rng,
-            0.11,
-            0.02,
+            coal_density[0],
+            coal_density[1],
             half_width,
             half_height,
             {"deathLimit": 2, "birthLimit": 4}
@@ -261,10 +284,11 @@ class GameMap:
                     amt = 350 + math.floor(rng.random() * 75)
                     resources_map[y][x] = {"type": Constants.RESOURCE_TYPES.COAL, "amt": amt}
 
+        uranium_density = density_map["uranium"]
         uranium_resources_map = self._generate_resource_map(
             rng,
-            0.055,
-            0.04,
+            uranium_density[0],
+            uranium_density[1],
             half_width,
             half_height,
             {"deathLimit": 1, "birthLimit": 6}

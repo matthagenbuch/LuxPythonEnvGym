@@ -8,6 +8,7 @@ from stable_baselines3.common.callbacks import BaseCallback
 from collections import Counter
 import copy
 from functools import reduce
+import random
 
 from ..game.game import Game
 from ..game.match_controller import GameStepFailedException, MatchController
